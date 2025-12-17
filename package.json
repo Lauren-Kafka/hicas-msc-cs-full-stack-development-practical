@@ -1,0 +1,24 @@
+{
+    "name": "hicas-msc-cs-fsd",
+    "version": "1.0.0",
+    "description": "CLI Wrapper for HICAS MSc CS Full Stack Development Practical Programs",
+    "bin": {
+        "hicas-msc-cs-fsd": "./index.js"
+    },
+    "keywords": [
+        "cli",
+        "education",
+        "hicas"
+    ],
+    "author": "Arun",
+    "license": "ISC",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Lauren-u4t/hicas-msc-cs-full-stack-development-practical.git"
+    },
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "dependencies": {}
+}
