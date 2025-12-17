@@ -1,247 +1,64 @@
-# MERN Authentication System - College Practical
+# Program 1 - Fullstack MERN Auth
 
-A production-grade MERN (MongoDB, Express, React, Node.js) authentication system built for educational purposes.
+Yo! 👋 This is a fullstack authentication system I built. It's got the full MERN stack setup (MongoDB, Express, React, Node) but with a focus on actually being nice to work with.
 
-## 📁 Project Structure
+## The Good Stuff
 
-```
-program1/
-├── client/                 # React Frontend
-│   ├── src/
-│   │   └── App.jsx        # Main application component
-│   ├── public/
-│   ├── package.json
-│   └── vite.config.js
-│
-├── server/                 # Node.js Backend
-│   ├── src/
-│   │   ├── config/        # Configuration files
-│   │   ├── controllers/   # Route controllers
-│   │   ├── middleware/    # Custom middleware
-│   │   ├── models/        # Database models
-│   │   ├── routes/        # API routes
-│   │   ├── services/      # Business logic
-│   │   ├── utils/         # Utility functions
-│   │   └── validators/    # Input validation
-│   ├── logs/              # Application logs
-│   ├── server.js          # Entry point
-│   └── package.json
-│
-├── docs/                   # Documentation
-│   ├── SETUP.md           # Setup instructions
-│   ├── API.md             # API documentation
-│   └── ENV_TEMPLATE.md    # Environment variables guide
-│
-└── README.md              # This file
-```
+Most tutorials give you a clunky setup. I tried to fix that:
 
-## 🚀 Features
+*   **One Command Start**: You don't need five terminal windows. Just run `npm run program1` and it boots everything.
+*   **Offline Mode**: This is my favorite part. If you don't have MongoDB installed (or you're too lazy to start it), the server won't crash. It just switches to "Memory Mode" so you can still test the UI and features.
+*   **Clean Logs**: I filtered out all that Mongoose noise. You only see what matters.
+*   **Modern UI**: React 18, Tailwind, and Framer Motion. no dusty old CSS.
 
-- **Secure Authentication**: JWT-based authentication with bcrypt password hashing
-- **Production-Grade Security**: 
-  - Helmet.js for HTTP headers
-  - Express Rate Limiting
-  - MongoDB sanitization
-  - HPP protection
-  - CORS configuration
-- **MVC Architecture**: Clean separation of concerns
-- **Error Handling**: Centralized error handling with Winston logging
-- **Input Validation**: Joi-based request validation
-- **Offline Mode**: Works without MongoDB for testing
-- **Modern UI**: React with Framer Motion animations and React Hot Toast
+## Tech Stack
 
-## 📋 Prerequisites
+*   **Frontend**: React + Vite (Fast as hell)
+*   **Styling**: Tailwind CSS
+*   **Icons**: Lucide React (Clean, no weird SVGs)
+*   **Backend**: Node + Express
+*   **Database**: MongoDB (optional-ish)
 
-- Node.js (v14 or higher)
-- MongoDB (v4.4 or higher) - Optional for offline mode
-- npm or yarn
+## How to Run It
 
-## 🔧 Quick Start
+1.  **Clone it**:
+    ```bash
+    git clone <repo_url>
+    cd program1
+    ```
 
-### 1. Clone and Install
+2.  **Install dependencies**:
+    I set it up so you can just run this scripts to install dependencies for both client and server:
+    ```bash
+    npm install --prefix client && npm install --prefix server
+    ```
 
-```bash
-# Navigate to project directory
-cd program1
+3.  **Start it**:
+    ```bash
+    npm run program1
+    ```
 
-# Install server dependencies
-cd server
-npm install
+That's it. It'll open the frontend at `http://localhost:5173`.
 
-# Install client dependencies
-cd ../client
-npm install
-```
+## Folder Structure
 
-### 2. Configure Environment
+Keep it simple:
 
-```bash
-# Server configuration
-cd server
-cp .env.example .env
-# Edit .env with your settings (see docs/ENV_TEMPLATE.md)
+*   `client/`: All the React stuff.
+*   `server/`: The Node API.
 
-# No client .env needed - uses default configuration
-```
+## API Endpoints
 
-### 3. Run the Application
+*   `POST /api/v1/auth/register` - Make a new user
+*   `POST /api/v1/auth/login` - Log in
+*   `GET /api/v1/auth/me` - See who's logged in
 
-```bash
-# Terminal 1 - Start server (from server directory)
-npm run dev
+## "It's Not Working?"
 
-# Terminal 2 - Start client (from client directory)
-npm run dev
-```
+If you see a yellow warning like `⚠️ MongoDB not found`, don't panic. That's the **Offline Mode**. You can still register and login, but the data will vanish when you restart the server.
 
-The application will be available at:
-- Frontend: http://localhost:5173
-- Backend: http://localhost:5001
-
-## 📚 Documentation
-
-- **[Setup Guide](docs/SETUP.md)** - Detailed installation and configuration
-- **[API Documentation](docs/API.md)** - Complete API reference
-- **[Environment Variables](docs/ENV_TEMPLATE.md)** - Configuration options
-
-## 🎓 For College Practical
-
-This project is designed for educational purposes and includes:
-
-1. **Complete MERN Stack Implementation**
-2. **Production-Ready Code Structure**
-3. **Security Best Practices**
-4. **Comprehensive Documentation**
-5. **Offline Mode for Easy Demonstration**
-
-### Running Without MongoDB
-
-The server automatically runs in **offline mode** if MongoDB is not available:
-- User data stored in memory
-- Perfect for demonstrations
-- No database setup required
-
-### Demo Credentials
-
-In offline mode, you can register any user. Example:
-- Name: `John Doe`
-- Email: `john@example.com`
-- Password: `Test123!@#` (min 6 characters)
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **React 18** - UI library
-- **React Router** - Client-side routing
-- **Axios** - HTTP client
-- **React Hook Form** - Form management
-- **Framer Motion** - Animations
-- **Tailwind CSS** - Styling (via utility classes)
-- **Vite** - Build tool
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express 4** - Web framework
-- **MongoDB** - Database
-- **Mongoose** - ODM
-- **JWT** - Authentication tokens
-- **Bcrypt** - Password hashing
-- **Winston** - Logging
-- **Joi** - Validation
-- **Helmet** - Security headers
-- **Express Rate Limit** - Rate limiting
-
-## 📝 API Endpoints
-
-### Authentication
-- `POST /api/v1/auth/register` - Register new user
-- `POST /api/v1/auth/login` - Login user
-- `GET /api/v1/auth/me` - Get current user (protected)
-
-### Health Check
-- `GET /api/v1/health` - Server health status
-
-## 🔒 Security Features
-
-1. **Password Security**
-   - Bcrypt hashing (10 rounds)
-   - Minimum 6 characters validation
-
-2. **HTTP Security**
-   - Helmet.js for secure headers
-   - CORS configuration
-   - XSS protection
-   - HPP (HTTP Parameter Pollution) protection
-
-3. **Rate Limiting**
-   - 100 requests per 15 minutes (configurable)
-   - Separate limits for auth endpoints
-
-4. **Input Validation**
-   - Joi schema validation
-   - MongoDB query sanitization
-   - Request body size limits
-
-## 📊 Logging
-
-Logs are stored in `server/logs/`:
-- `combined.log` - All logs
-- `error.log` - Error logs only
-
-## 🧪 Testing
-
-```bash
-# Server tests (when implemented)
-cd server
-npm test
-
-# Client tests (when implemented)
-cd client
-npm test
-```
-
-## 📦 Building for Production
-
-```bash
-# Build client
-cd client
-npm run build
-
-# The build output will be in client/dist/
-# Serve with any static file server
-```
-
-## 🤝 Contributing
-
-This is an educational project. Feel free to:
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
-## 📄 License
-
-This project is created for educational purposes.
-
-## 👨‍🎓 Author
-
-Created for college practical demonstration.
-
-## 🙏 Acknowledgments
-
-- Built with modern MERN stack best practices
-- Follows industry-standard security guidelines
-- Implements clean code architecture
+If you want the data to stick, just make sure `mongod` is running in the background.
 
 ---
 
-**Note**: This project is designed for educational purposes. For production deployment, additional considerations like:
-- Environment-specific configurations
-- Database backups
-- SSL/TLS certificates
-- Load balancing
-- Monitoring and alerting
-- CI/CD pipelines
-
-should be implemented.
+Built for the College Practical (Program 1).
