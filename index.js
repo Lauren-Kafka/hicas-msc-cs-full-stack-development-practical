@@ -2,7 +2,7 @@
 import { execSync, spawn } from "child_process";
 import fs from "fs";
 
-const repo = "https://github.com/Lauren-u4t/hicas-msc-cs-full-stack-development-practical.git";
+const repo = "https://github.com/steelbird-u4t/hicas-msc-cs-full-stack-development-practical.git";
 const cmd = process.argv[2];
 const program = process.argv[3] || cmd;
 
