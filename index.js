@@ -13,18 +13,39 @@ if (!cmd) {
   process.exit(0);
 }
 
+if (cmd === "list") {
+  console.log("Available programs:");
+  console.log("- program1");
+  process.exit(0);
+}
+
 if (cmd === "run") {
   if (!fs.existsSync(program)) {
-    console.error("Program not found");
+    console.error(`Error: Directory "${program}" not found.`);
+    console.error(`Did you download it first?`);
+    console.error(`Run this command: npx hicas-msc-cs-fsd ${program}`);
     process.exit(1);
   }
 
-  spawn("npm", ["run", "dev"], { cwd: `${program}/server`, stdio: "inherit", shell: true });
-  spawn("npm", ["run", "dev"], { cwd: `${program}/client`, stdio: "inherit", shell: true });
-  return;
-}
+  console.log("Installing Server dependencies...");
+  if (!fs.existsSync(`${program}/server/node_modules`)) {
+    execSync("npm install", { cwd: `${program}/server`, stdio: "inherit" });
+  }
 
-execSync(
-  `git clone -b ${cmd} --single-branch ${repo} ${cmd}`,
-  { stdio: "inherit" }
-);
+  console.log("Installing Client dependencies...");
+  if (!fs.existsSync(`${program}/client/node_modules`)) {
+    execSync("npm install", { cwd: `${program}/client`, stdio: "inherit" });
+  }
+
+  const server = spawn("npm", ["run", "dev"], { cwd: `${program}/server`, stdio: "inherit", shell: true });
+  const client = spawn("npm", ["run", "dev"], { cwd: `${program}/client`, stdio: "inherit", shell: true });
+
+  // Keep alive
+  process.stdin.resume();
+} else {
+  // Download logic
+  execSync(
+    `git clone -b ${cmd} --single-branch ${repo} ${cmd}`,
+    { stdio: "inherit" }
+  );
+}

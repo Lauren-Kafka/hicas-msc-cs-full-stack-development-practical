@@ -1,6 +1,6 @@
 {
     "name": "hicas-msc-cs-fsd",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "description": "CLI Wrapper for HICAS MSc CS Full Stack Development Practical Programs",
     "bin": {
         "hicas-msc-cs-fsd": "index.js"
