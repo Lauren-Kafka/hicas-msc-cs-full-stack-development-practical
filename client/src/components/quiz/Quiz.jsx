@@ -43,43 +43,43 @@ export function Quiz({ data }) {
   // Handler: Restart Quiz
   const handleRestart = () => {
     setStarted(false);
+    setShowResult(false);
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setHistory([]);
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 font-sans bg-[#fcfcfc]">
-      {/* Container wrapper for neat UI centering */}
-      <div className="w-full max-w-3xl tech-panel rounded-xl overflow-hidden min-h-[600px] flex flex-col relative">
-        
-        {/* State 1: Before Quiz Starts */}
-        {!started && !showResult && (
-          <QuizStartScreen 
-            title={data.title} 
-            description={data.description} 
-            questionCount={questionCount} 
-            onStart={handleStart} 
-          />
-        )}
+    <div className="w-full max-w-3xl tech-panel rounded-xl overflow-hidden flex flex-col relative bg-white shadow-[0_4px_14px_0_rgba(0,0,0,0.05)] border border-[#eaeaea]" style={{ height: '650px', maxHeight: '85vh' }}>
+      {/* State 1: Before Quiz Starts */}
+      {!started && !showResult && (
+        <QuizStartScreen 
+          title={data.title} 
+          description={data.description} 
+          questionCount={questionCount} 
+          onStart={handleStart} 
+        />
+      )}
 
-        {/* State 2: Displaying Question */}
-        {started && !showResult && (
-          <QuizQuestion 
-            questionData={currentQuestion}
-            currentIndex={currentQuestionIndex}
-            totalQuestions={questionCount}
-            onAnswer={handleAnswer}
-          />
-        )}
+      {/* State 2: Displaying Question */}
+      {started && !showResult && (
+        <QuizQuestion 
+          questionData={currentQuestion}
+          currentIndex={currentQuestionIndex}
+          totalQuestions={questionCount}
+          onAnswer={handleAnswer}
+        />
+      )}
 
-        {/* State 3: Finished / Results */}
-        {showResult && (
-          <QuizResult 
-            score={score}
-            totalQuestions={questionCount}
-            history={history}
-            onRestart={handleRestart}
-          />
-        )}
-      </div>
+      {/* State 3: Finished / Results */}
+      {showResult && (
+        <QuizResult 
+          score={score}
+          totalQuestions={questionCount}
+          history={history}
+          onRestart={handleRestart}
+        />
+      )}
     </div>
   );
 }
