@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import { ChevronRight, HelpCircle } from 'lucide-react';
 
 export function QuizQuestion({ questionData, currentIndex, totalQuestions, onAnswer }) {
   const [selectedOption, setSelectedOption] = useState(null);
-  const [showExplanation, setShowExplanation] = useState(false);
+  
+  // Progress computation
   const progressPercentage = ((currentIndex) / totalQuestions) * 100;
 
   // Reset state when question changes
   useEffect(() => {
     setSelectedOption(null);
-    setShowExplanation(false);
   }, [questionData.id]);
 
   const handleNext = () => {
@@ -22,56 +21,57 @@ export function QuizQuestion({ questionData, currentIndex, totalQuestions, onAns
   const isCorrectlyAnswered = selectedOption === questionData.correctAnswerIndex;
 
   return (
-    <div className="flex-1 flex flex-col w-full h-full relative">
+    <div className="flex-1 flex flex-col w-full h-full relative bg-white">
       {/* Progress Header */}
-      <div className="w-full bg-white/50 backdrop-blur-md border-b border-slate-100 p-6 sm:px-10 flex flex-col gap-4 rounded-t-[2.5rem]">
-        <div className="flex justify-between items-center text-sm font-semibold tracking-wide">
-          <span className="text-slate-400 uppercase tracking-wider text-xs font-bold">Question {currentIndex + 1} of {totalQuestions}</span>
-          <span className="text-primary-600 bg-primary-50 px-3 py-1 rounded-full text-xs font-bold">{Math.round(progressPercentage)}% Complete</span>
+      <div className="w-full border-b border-[#eaeaea] p-6 lg:p-8 flex flex-col gap-5 bg-[#fafafa]">
+        <div className="flex justify-between items-center text-xs font-mono uppercase tracking-widest text-[#666]">
+          <span>{String(currentIndex + 1).padStart(2, '0')} / {String(totalQuestions).padStart(2, '0')}</span>
+          <span>{Math.round(progressPercentage)}%</span>
         </div>
         
         {/* Progress bar */}
-        <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+        <div className="w-full h-[2px] bg-[#eaeaea]">
           <div 
-            className="h-full bg-primary-500 rounded-full transition-all duration-700 ease-out"
+            className="h-full bg-[#111] transition-all duration-500 ease-out"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
       </div>
 
       {/* Question Content */}
-      <div className="flex-1 p-6 sm:p-10 pb-32 overflow-y-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-10 leading-relaxed animate-slide-up">
+      <div className="flex-1 p-6 lg:p-10 pb-32 overflow-y-auto">
+        <h2 className="text-xl sm:text-2xl font-medium text-[#111] mb-10 leading-relaxed font-sans animate-slide-up tracking-tight">
           {questionData.question}
         </h2>
 
         {/* Options */}
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-3 w-full">
           {questionData.options.map((option, index) => {
             const isSelected = selectedOption === index;
             const isCorrectOption = index === questionData.correctAnswerIndex;
             
             // Determine styling based on state
-            let borderStyle = 'border-slate-200 hover:border-primary-400 hover:bg-primary-50/50';
-            let bgStyle = 'bg-white';
-            let textStyle = 'text-slate-700';
+            let containerStyle = 'border border-[#eaeaea] hover:border-[#111] bg-white';
+            let letterStyle = 'bg-[#f5f5f5] text-[#888]';
+            let textStyle = 'text-[#333]';
             
             if (hasAnswered) {
               if (isCorrectOption) {
-                borderStyle = 'border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500 z-10';
-                bgStyle = 'bg-emerald-50/50';
-                textStyle = 'text-emerald-900 font-semibold';
+                containerStyle = 'border border-[#0070f3] bg-[#0070f3] bg-opacity-[0.03]';
+                letterStyle = 'bg-[#0070f3] text-white';
+                textStyle = 'text-[#0070f3] font-medium';
               } else if (isSelected && !isCorrectOption) {
-                borderStyle = 'border-rose-400 text-rose-700 shadow-[0_0_20px_rgba(244,63,94,0.1)]';
-                bgStyle = 'bg-rose-50/50';
-                textStyle = 'text-rose-900 line-through opacity-80';
+                containerStyle = 'border border-[#e00] bg-[#e00] bg-opacity-[0.03]';
+                letterStyle = 'bg-[#e00] text-white';
+                textStyle = 'text-[#e00] line-through opacity-80';
               } else {
-                borderStyle = 'border-slate-100 opacity-50';
-                bgStyle = 'bg-slate-50/50';
+                containerStyle = 'border border-[#eaeaea] opacity-50 bg-[#fafafa]';
+                letterStyle = 'bg-[#f5f5f5] text-[#999]';
               }
             } else if (isSelected) {
-              borderStyle = 'border-primary-500 ring-2 ring-primary-500 shadow-[0_0_20px_rgba(99,102,241,0.15)] scale-[1.01] z-10';
-              bgStyle = 'bg-white';
+              containerStyle = 'border border-[#111] bg-[#111] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]';
+              letterStyle = 'bg-white text-[#111]';
+              textStyle = 'text-white font-medium';
             }
 
             return (
@@ -79,20 +79,15 @@ export function QuizQuestion({ questionData, currentIndex, totalQuestions, onAns
                 key={index}
                 disabled={hasAnswered}
                 onClick={() => setSelectedOption(index)}
-                className={`w-full text-left p-6 rounded-2xl border-2 transition-all duration-300 ease-out flex items-center justify-between group ${borderStyle} ${bgStyle}`}
+                className={`w-full text-left p-4 rounded transition-all duration-200 ease-out flex items-center justify-between group ${containerStyle}`}
               >
-                <div className="flex items-center gap-5">
-                  {/* Option letter circle (A, B, C...) */}
-                  <div className={`w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center font-black text-sm transition-all duration-300
-                    ${hasAnswered ? 
-                      (isCorrectOption ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30' : isSelected ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30' : 'bg-slate-200 text-slate-400') 
-                      : isSelected ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/30 -translate-y-0.5' : 'bg-slate-100 text-slate-500 group-hover:bg-primary-100 group-hover:text-primary-700'
-                    }`}
-                  >
+                <div className="flex items-center gap-4">
+                  {/* Option letter box (A, B, C...) */}
+                  <div className={`w-8 h-8 shrink-0 rounded flex items-center justify-center font-mono text-xs font-medium transition-colors ${letterStyle}`}>
                     {String.fromCharCode(65 + index)}
                   </div>
                   
-                  <span className={`text-base sm:text-lg ${textStyle}`}>
+                  <span className={`text-sm sm:text-base ${textStyle}`}>
                     {option}
                   </span>
                 </div>
@@ -103,37 +98,32 @@ export function QuizQuestion({ questionData, currentIndex, totalQuestions, onAns
 
         {/* Explanation shown after answering */}
         {hasAnswered && (
-          <div className={`mt-10 p-6 sm:p-8 rounded-3xl border ${isCorrectlyAnswered ? 'bg-emerald-50/80 border-emerald-200' : 'bg-orange-50/80 border-orange-200'} animate-slide-up backdrop-blur-sm`}>
-            <div className="flex items-start gap-4">
-              <div className={`p-2 rounded-xl shrink-0 ${isCorrectlyAnswered ? 'bg-emerald-100' : 'bg-orange-100'}`}>
-                <HelpCircle className={`w-6 h-6 ${isCorrectlyAnswered ? 'text-emerald-600' : 'text-orange-600'}`} />
-              </div>
-              <div className="pt-1">
-                <h4 className={`font-bold uppercase tracking-wider text-sm mb-3 ${isCorrectlyAnswered ? 'text-emerald-800' : 'text-orange-800'}`}>
-                  {isCorrectlyAnswered ? 'Correct Answer!' : 'Incorrect'}
-                </h4>
-                <p className={`text-lg leading-relaxed ${isCorrectlyAnswered ? 'text-emerald-900/80' : 'text-orange-900/80'}`}>
-                  {questionData.explanation}
-                </p>
-              </div>
+          <div className="mt-12 pt-8 border-t border-[#eaeaea] animate-slide-up">
+            <h4 className="font-mono text-[10px] uppercase tracking-widest text-[#888] mb-3">
+              {isCorrectlyAnswered ? 'Status: Correct' : 'Status: Incorrect'}
+            </h4>
+            <div className={`p-4 rounded border text-sm leading-relaxed ${isCorrectlyAnswered ? 'bg-[#0070f3] bg-opacity-[0.03] border-[#0070f3] border-opacity-20 text-[#111]' : 'bg-[#e00] bg-opacity-[0.03] border-[#e00] border-opacity-20 text-[#111]'}`}>
+              {questionData.explanation}
             </div>
           </div>
         )}
       </div>
 
       {/* Footer Navigation */}
-      <div className="absolute bottom-0 left-0 w-full bg-white/80 backdrop-blur-xl border-t border-slate-100 p-6 sm:px-10 flex justify-end shrink-0 rounded-b-[2.5rem]">
+      <div className="absolute bottom-0 left-0 w-full bg-white border-t border-[#eaeaea] p-6 lg:px-10 flex justify-between items-center shrink-0 rounded-b-xl shadow-[0_-10px_30px_rgba(255,255,255,0.9)]">
+        <div className="text-xs text-[#888] font-mono hidden sm:block">
+          Select an option to continue
+        </div>
         <button
           onClick={handleNext}
           disabled={!hasAnswered}
-          className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-bold transition-all duration-300
+          className={`relative rounded border px-8 py-2.5 text-sm font-medium transition-all
             ${hasAnswered 
-              ? 'bg-slate-900 text-white hover:bg-black hover:shadow-xl hover:shadow-slate-900/20 hover:-translate-y-1 active:scale-95 translate-y-0 opacity-100' 
-              : 'bg-slate-100 text-slate-400 cursor-not-allowed translate-y-2 opacity-0'
+              ? 'bg-[#111] border-[#111] text-white hover:bg-white hover:text-[#111] active:translate-y-[1px]' 
+              : 'bg-[#fafafa] border-[#eaeaea] text-[#ccc] cursor-not-allowed'
             }`}
         >
-          {currentIndex === totalQuestions - 1 ? 'Finish Assessment' : 'Continue'}
-          <ChevronRight className="w-5 h-5" />
+          {currentIndex === totalQuestions - 1 ? 'Complete' : 'Next'}
         </button>
       </div>
     </div>

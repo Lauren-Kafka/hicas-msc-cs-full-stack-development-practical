@@ -46,9 +46,9 @@ export function Quiz({ data }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 font-sans">
+    <div className="min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 font-sans bg-[#fcfcfc]">
       {/* Container wrapper for neat UI centering */}
-      <div className="w-full max-w-3xl glass-panel rounded-[2.5rem] overflow-hidden min-h-[600px] flex flex-col relative">
+      <div className="w-full max-w-3xl tech-panel rounded-xl overflow-hidden min-h-[600px] flex flex-col relative">
         
         {/* State 1: Before Quiz Starts */}
         {!started && !showResult && (

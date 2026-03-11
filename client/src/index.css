@@ -1,25 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #faf5ff;
-  --color-primary-100: #f3e8ff;
-  --color-primary-200: #e9d5ff;
-  --color-primary-300: #d8b4fe;
-  --color-primary-400: #c084fc;
-  --color-primary-500: #a855f7;
-  --color-primary-600: #9333ea;
-  --color-primary-700: #7e22ce;
-  --color-primary-800: #6b21a8;
-  --color-primary-900: #581c87;
-  
-  --font-sans: "Inter", system-ui, sans-serif;
+  --color-primary-900: #000000;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
-    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-    background-size: 24px 24px;
+    @apply bg-[#fcfcfc] text-[#111111] font-sans antialiased;
   }
 }
 
@@ -27,7 +16,7 @@
 @keyframes slideUpAndFade {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -36,9 +25,9 @@
 }
 
 .animate-slide-up {
-  animation: slideUpAndFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUpAndFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.glass-panel {
-  @apply bg-white/70 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+.tech-panel {
+  @apply bg-white border border-[#eaeaea] shadow-[0_2px_4px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.02)];
 }
