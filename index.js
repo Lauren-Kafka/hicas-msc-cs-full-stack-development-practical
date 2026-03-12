@@ -16,6 +16,7 @@ if (!cmd) {
 if (cmd === "list") {
   console.log("Available programs:");
   console.log("- program1");
+  console.log("- program9");
   process.exit(0);
 }
 
@@ -27,18 +28,24 @@ if (cmd === "run") {
     process.exit(1);
   }
 
-  console.log("Installing Server dependencies...");
-  if (!fs.existsSync(`${program}/server/node_modules`)) {
-    execSync("npm install", { cwd: `${program}/server`, stdio: "inherit" });
+  let server;
+  let client;
+
+  if (fs.existsSync(`${program}/server`)) {
+    console.log("Installing Server dependencies...");
+    if (!fs.existsSync(`${program}/server/node_modules`)) {
+      execSync("npm install", { cwd: `${program}/server`, stdio: "inherit" });
+    }
+    server = spawn("npm", ["run", "dev"], { cwd: `${program}/server`, stdio: "inherit", shell: true });
   }
 
-  console.log("Installing Client dependencies...");
-  if (!fs.existsSync(`${program}/client/node_modules`)) {
-    execSync("npm install", { cwd: `${program}/client`, stdio: "inherit" });
+  if (fs.existsSync(`${program}/client`)) {
+    console.log("Installing Client dependencies...");
+    if (!fs.existsSync(`${program}/client/node_modules`)) {
+      execSync("npm install", { cwd: `${program}/client`, stdio: "inherit" });
+    }
+    client = spawn("npm", ["run", "dev"], { cwd: `${program}/client`, stdio: "inherit", shell: true });
   }
-
-  const server = spawn("npm", ["run", "dev"], { cwd: `${program}/server`, stdio: "inherit", shell: true });
-  const client = spawn("npm", ["run", "dev"], { cwd: `${program}/client`, stdio: "inherit", shell: true });
 
   // Keep alive
   process.stdin.resume();
