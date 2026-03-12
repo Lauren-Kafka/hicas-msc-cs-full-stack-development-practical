@@ -10,6 +10,11 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#fcfcfc] flex flex-col items-center justify-center p-4 sm:p-8 font-sans">
+      {/* Landing Page Top Title */}
+      <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#111] mb-8 font-sans">
+        Quiz App
+      </h1>
+      
       {!quizData ? (
         <QuizCreator onComplete={handleStartQuiz} />
       ) : (

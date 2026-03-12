@@ -137,14 +137,22 @@ export function QuizCreator({ onComplete }) {
               <label className="text-xs font-mono uppercase tracking-widest text-[#888]">Options (Max 5)</label>
               {q.options.map((opt, oIndex) => (
                 <div key={oIndex} className="flex items-center gap-3">
-                  <input 
-                    type="radio" 
-                    name={`correct-${q.id}`}
-                    checked={q.correctAnswerIndex === oIndex}
-                    onChange={() => handleQuestionChange(qIndex, 'correctAnswerIndex', oIndex)}
-                    className="accent-[#111] w-4 h-4 cursor-pointer"
-                    title="Mark as correct answer"
-                  />
+                  <label 
+                    className={`flex items-center justify-center cursor-pointer text-[10px] uppercase tracking-widest font-mono font-medium px-3 py-2.5 rounded border transition-colors shrink-0 min-w-[120px] select-none
+                      ${q.correctAnswerIndex === oIndex 
+                        ? 'bg-[#0070f3] text-white border-[#0070f3]' 
+                        : 'bg-[#fafafa] text-[#888] border-[#eaeaea] hover:border-[#ccc]'
+                      }`}
+                  >
+                    <input 
+                      type="radio" 
+                      name={`correct-${q.id}`}
+                      checked={q.correctAnswerIndex === oIndex}
+                      onChange={() => handleQuestionChange(qIndex, 'correctAnswerIndex', oIndex)}
+                      className="hidden"
+                    />
+                    {q.correctAnswerIndex === oIndex ? '✓ Correct Answer' : 'Mark Correct'}
+                  </label>
                   <input 
                     type="text"
                     value={opt}
@@ -154,7 +162,7 @@ export function QuizCreator({ onComplete }) {
                     required
                   />
                   {q.options.length > 2 && (
-                    <button type="button" onClick={() => removeOption(qIndex, oIndex)} className="text-[#999] hover:text-[#e00] text-lg leading-none cursor-pointer p-1">
+                    <button type="button" onClick={() => removeOption(qIndex, oIndex)} className="text-[#999] hover:text-[#e00] text-lg leading-none cursor-pointer p-1 shrink-0">
                       &times;
                     </button>
                   )}

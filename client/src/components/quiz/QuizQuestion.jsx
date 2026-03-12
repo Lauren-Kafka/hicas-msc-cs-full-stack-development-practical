@@ -39,13 +39,13 @@ export function QuizQuestion({ questionData, currentIndex, totalQuestions, onAns
       </div>
 
       {/* Question Content */}
-      <div className="flex-1 p-6 lg:p-10 pb-32 overflow-y-auto">
+      <div className="flex-1 p-6 lg:p-10 overflow-y-auto min-h-0">
         <h2 className="text-xl sm:text-2xl font-medium text-[#111] mb-10 leading-relaxed font-sans animate-slide-up tracking-tight">
           {questionData.question}
         </h2>
 
         {/* Options */}
-        <div className="flex flex-col gap-3 w-full">
+        <div className="flex flex-col gap-3 w-full pb-8">
           {questionData.options.map((option, index) => {
             const isSelected = selectedOption === index;
             const isCorrectOption = index === questionData.correctAnswerIndex;
@@ -79,7 +79,7 @@ export function QuizQuestion({ questionData, currentIndex, totalQuestions, onAns
                 key={index}
                 disabled={hasAnswered}
                 onClick={() => setSelectedOption(index)}
-                className={`w-full text-left p-4 rounded transition-all duration-200 ease-out flex items-center justify-between group ${containerStyle}`}
+                className={`w-full text-left p-4 rounded transition-all duration-200 ease-out flex items-center justify-between group flex-shrink-0 ${containerStyle}`}
               >
                 <div className="flex items-center gap-4">
                   {/* Option letter box (A, B, C...) */}
@@ -98,19 +98,19 @@ export function QuizQuestion({ questionData, currentIndex, totalQuestions, onAns
 
         {/* Explanation shown after answering */}
         {hasAnswered && (
-          <div className="mt-12 pt-8 border-t border-[#eaeaea] animate-slide-up">
+          <div className="mt-4 pt-8 border-t border-[#eaeaea] animate-slide-up pb-8">
             <h4 className="font-mono text-[10px] uppercase tracking-widest text-[#888] mb-3">
               {isCorrectlyAnswered ? 'Status: Correct' : 'Status: Incorrect'}
             </h4>
             <div className={`p-4 rounded border text-sm leading-relaxed ${isCorrectlyAnswered ? 'bg-[#0070f3] bg-opacity-[0.03] border-[#0070f3] border-opacity-20 text-[#111]' : 'bg-[#e00] bg-opacity-[0.03] border-[#e00] border-opacity-20 text-[#111]'}`}>
-              {questionData.explanation}
+              {questionData.explanation || 'No explanation provided.'}
             </div>
           </div>
         )}
       </div>
 
       {/* Footer Navigation */}
-      <div className="absolute bottom-0 left-0 w-full bg-white border-t border-[#eaeaea] p-6 lg:px-10 flex justify-between items-center shrink-0 rounded-b-xl shadow-[0_-10px_30px_rgba(255,255,255,0.9)]">
+      <div className="w-full bg-white border-t border-[#eaeaea] p-4 lg:px-10 flex justify-between items-center shrink-0 rounded-b-xl z-10 relative">
         <div className="text-xs text-[#888] font-mono hidden sm:block">
           Select an option to continue
         </div>
